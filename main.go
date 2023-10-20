@@ -25,8 +25,6 @@ var exampleHtml = `
 `
 
 func main() {
-	fmt.Println("hello world")
-
 	r := strings.NewReader(exampleHtml)
 	links, err := util.Parser(r)
 
