@@ -1,7 +1,6 @@
 package util
 
 import (
-	"fmt"
 	"io"
 
 	"golang.org/x/net/html"
@@ -15,19 +14,25 @@ type Link struct {
 
 func Parser(r io.Reader) ([]Link, error) {
 	z := html.NewTokenizer(r)
+	links := []Link{}
 
 	for {
 		tt := z.Next()
 		if tt == html.ErrorToken {
-			// ...
-			return nil, nil
+			// End of Doc
+			return links, nil
 		}
 
 		tagName, _ := z.TagName()
-		fmt.Println(string(tagName))
-	}
+		if string(tagName) == "a" {
+			_, val, _ := z.TagAttr()
 
-	return []Link{
-		{Href: "example 1", Text: "i am example 1"},
-	}, nil
+			tt = z.Next()
+
+			links = append(links, Link{
+				Href: string(val),
+				Text: string(z.Text()),
+			})
+		}
+	}
 }

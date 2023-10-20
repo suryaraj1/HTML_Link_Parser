@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"strconv"
 	"strings"
 
 	"github.com/suryaraj1/html-link-parser/util"
@@ -32,7 +31,7 @@ func main() {
 		panic(err)
 	}
 
-	for i, link := range links {
-		fmt.Println(strconv.Itoa(i) + " " + link.Href)
+	for _, link := range links {
+		fmt.Println(link.Href + " " + link.Text)
 	}
 }
