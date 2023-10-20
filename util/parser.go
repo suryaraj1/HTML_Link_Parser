@@ -3,6 +3,7 @@ package util
 import (
 	"fmt"
 	"io"
+	"strings"
 
 	"golang.org/x/net/html"
 )
@@ -82,6 +83,6 @@ func buildLink(n *html.Node) Link {
 		}
 	}
 
-	ret.Text = text(n)
+	ret.Text = strings.TrimSpace(text(n))
 	return ret
 }
