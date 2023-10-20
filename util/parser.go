@@ -1,6 +1,11 @@
 package util
 
-import "io"
+import (
+	"fmt"
+	"io"
+
+	"golang.org/x/net/html"
+)
 
 // Type definition for Link
 type Link struct {
@@ -9,11 +14,20 @@ type Link struct {
 }
 
 func Parser(r io.Reader) ([]Link, error) {
-	links := []Link{
-		{Href: "/example1", Text: "Example Link 1"},
-		{Href: "/example2", Text: "Example Link 2"},
-		{Href: "/example3", Text: "Example Link 3"},
+	z := html.NewTokenizer(r)
+
+	for {
+		tt := z.Next()
+		if tt == html.ErrorToken {
+			// ...
+			return nil, nil
+		}
+
+		tagName, _ := z.TagName()
+		fmt.Println(string(tagName))
 	}
 
-	return links, nil
+	return []Link{
+		{Href: "example 1", Text: "i am example 1"},
+	}, nil
 }
